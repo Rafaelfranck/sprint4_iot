@@ -1,162 +1,179 @@
-# 🧠 Projeto IoT + Reconhecimento Facial
+# 🧠 Projeto IoT com Reconhecimento Facial
+
+Este projeto integra um sistema de **reconhecimento facial** desenvolvido em Python com uma **aplicação mobile em React Native**. O objetivo é permitir a autenticação de um usuário através da câmera, registrando sua presença e liberando o acesso ao aplicativo.
 
 ### 👥 Integrantes
-- **Rafael Franck** (RM550875)  
-- **Gabriela Trevisan** (RM99500)  
-- **Eduardo Araujo** (RM99758)  
+- **Rafael Franck** (RM550875)
+- **Gabriela Trevisan** (RM99500)
+- **Eduardo Araujo** (RM99758)
 - **Leonardo Bonini** (RM551716)
 
 ---
 
-## 🎯 Objetivo
+## 🎥 Demonstração em Vídeo
 
-Integrar um módulo de **reconhecimento facial** desenvolvido em **Python (Flask + OpenCV)** com uma **aplicação mobile/web React Native (Expo)**, permitindo que o usuário seja autenticado por meio da câmera.
-
-Quando o rosto é reconhecido, o sistema:
-1. Registra automaticamente a presença no **Firebase Firestore**.  
-2. Redireciona o usuário para a **tela principal da aplicação**.
+👉 Assista ao vídeo de demonstração no Google Drive *[aqui](https://drive.google.com/file/d/11PDbrhh8zY-XkbxwcXM17NDy-8RBYob2/view?usp=drive_link)*.
 
 ---
 
-## 🧩 Tecnologias Utilizadas
+## ✨ Funcionalidades Principais
 
-| Camada | Tecnologias |
-|:--|:--|
-| **Frontend (App)** | React Native (Expo) + TypeScript |
-| **Backend** | Python + Flask + OpenCV |
-| **Banco de Dados** | Firebase Firestore |
-| **Reconhecimento Facial** | Modelo Haar Cascade |
+* **Autenticação Facial**: O usuário inicia o aplicativo e utiliza a câmera para ser autenticado.
+* **Comunicação via API**: O aplicativo envia a imagem capturada (em formato Base64) para um servidor Flask, que realiza o processamento.
+* **Detecção de Rosto**: O backend utiliza a biblioteca OpenCV e o modelo Haar Cascade para detectar a presença de um rosto na imagem.
+* **Registro no Firebase**: Após o reconhecimento, a presença do usuário é registrada automaticamente no Firebase Firestore, incluindo nome e timestamp.
+* **Navegação Automática**: Uma vez autenticado, o usuário é redirecionado para a tela principal da aplicação.
 
 ---
 
-## ⚙️ Passo a Passo para Executar a Solução Final
+## 🛠️ Tecnologias Utilizadas
 
-### 🖥️ 1. Iniciar o servidor Flask
+| Camada                  | Tecnologias                               | Descrição                                                                      |
+| :---------------------- | :---------------------------------------- | :----------------------------------------------------------------------------- |
+| **Frontend (Mobile App)** | `React Native (Expo)` + `TypeScript`      | Para a construção da interface do usuário e captura da câmera.                 |
+| **Backend (API)** | `Python` + `Flask` + `OpenCV`             | Para o processamento da imagem, detecção facial e comunicação com o app.         |
+| **Banco de Dados** | `Firebase Firestore`                      | Para armazenar os registros de presença (logs de autenticação).                |
+| **Reconhecimento Facial** | `Haar Cascade`                            | Modelo pré-treinado do OpenCV para detecção de objetos (neste caso, rostos). |
 
-1. Abra o terminal dentro da pasta:
-   ```bash
-   cd iot_project/src
-   
-2. Ative o ambiente virtual:
-   ```bash
-   .venv\Scripts\activate
+---
 
-3. Execute o servidor:
-   ```bash
-   python api.py
-
-O servidor Flask será iniciado localmente (exemplo: http://127.0.0.1:5000).
-
-📱 2. Iniciar o aplicativo React Native
-
-No terminal do projeto React Native, execute:
-
-npx expo start
-
-
-O navegador abrirá automaticamente a aplicação.
-
-Clique em “Iniciar Reconhecimento Facial” e aguarde alguns segundos.
-
-O app se conectará ao servidor Flask, processará a imagem e validará o rosto.
-
-Após a validação, o usuário será redirecionado para a tela principal da aplicação.
-
-🔁 Fluxo de Funcionamento
-
-O app captura a imagem da câmera (via CameraView ou getUserMedia).
-
-A imagem é convertida em Base64 e enviada via POST para o servidor Flask.
-
-O Flask decodifica e processa a imagem com o modelo Haar Cascade.
-
-Se um rosto for detectado:
-
-O servidor retorna:
-
-{ "recognized": true, "user": "Rafael" }
-
-
-O app grava no Firestore:
-
-Nome do usuário
-
-Data e hora do reconhecimento
-
-Status de sucesso
-
-O app redireciona automaticamente para a tela principal (Tabs).
-
-🔗 Integração com o Resto da Aplicação
-
-O reconhecimento facial atua como etapa inicial de autenticação.
-
-Após o rosto ser reconhecido:
-
-O app grava o log de presença no Firebase.
-
-Em seguida, abre as telas principais do aplicativo:
-
-Perfil
-
-Carteira
-
-Ativos
-
-Recomendações
-
-Dessa forma, o reconhecimento facial está diretamente integrado ao fluxo de login e navegação, oferecendo uma autenticação prática e automatizada.
-
-🗂 Estrutura Completa do Projeto
+## 📂 Estrutura do Projeto
+```bash
 iot_project/
 │
-├── src/
-│   ├── api.py              # Servidor Flask com endpoint /recognize
-│   ├── detect_haar.py      # Script de reconhecimento facial (modelo Haar Cascade)
-│   ├── data/               # Base de imagens de referência
-│   ├── templates/          # (Opcional) Páginas HTML auxiliares
+├── .venv/                  # Ambiente virtual do Python
+├── src/                    # Código-fonte do backend
+│   ├── api.py              # Servidor Flask com o endpoint de reconhecimento
 │   └── __init__.py
 │
-├── .venv/                  # Ambiente virtual Python
-├── requirements.txt        # Dependências do backend
-│
-└── react_app/              # Projeto React Native (Expo)
-    ├── App.tsx
-    ├── package.json
+├── requirements.txt        # Dependências do backend (Python)
+└── react_app/              # (Exemplo) Projeto React Native (Expo)
+    ├── App.tsx             # Arquivo principal do app
+    ├── package.json        # Dependências do frontend
     ├── assets/
     ├── screens/
     └── components/
+```
+---
 
-🧱 Instalação das Dependências
-🐍 Backend (Python)
+## 🚀 Como Executar a Solução
 
-Dentro da pasta iot_project/src, execute:
+Siga os passos abaixo para configurar e executar o ambiente localmente.
 
-python -m venv .venv
-.venv\Scripts\activate
-pip install -r requirements.txt
+### 1. Backend (Servidor Flask)
 
-📱 Frontend (React Native)
+**Pré-requisitos**: Python 3.x instalado.
 
-Dentro da pasta do projeto React Native (ex: react_app/), execute:
+1.  **Navegue até a pasta do projeto e crie o ambiente virtual:**
+    ```bash
+    cd iot_project
+    python -m venv .venv
+    ```
 
-npm install
-npx expo start
+2.  **Ative o ambiente virtual:**
+    * No Windows:
+        ```bash
+        .venv\Scripts\activate
+        ```
+    * No macOS/Linux:
+        ```bash
+        source .venv/bin/activate
+        ```
 
-🎥 Demonstração em Vídeo
+3.  **Instale as dependências do Python:**
+    ```bash
+    pip install -r requirements.txt
+    ```
 
-👉 Assista ao vídeo de demonstração no Google Drive
+4.  **Inicie o servidor Flask:**
+    ```bash
+    cd src
+    python api.py
+    ```
+    O servidor será iniciado em `http://<seu-ip-local>:5000`. Anote o endereço IP, pois ele será usado no aplicativo.
 
-🧾 Observações Finais
+### 2. Frontend (Aplicativo React Native)
 
-Certifique-se de ter todas as dependências instaladas corretamente (requirements.txt e package.json).
+**Pré-requisitos**: Node.js, npm/yarn e Expo CLI instalados.
 
-Verifique se o servidor Flask está rodando antes de abrir o aplicativo Expo.
+1.  **Navegue até a pasta do aplicativo:**
+    ```bash
+    cd react_app
+    ```
 
-O sistema foi desenvolvido para fins acadêmicos, mas pode ser facilmente expandido para:
+2.  **Instale as dependências do Node.js:**
+    ```bash
+    npm install
+    ```
 
-Controle de acesso físico ou digital;
+3.  **Configure o IP do servidor no código do aplicativo:**
+    * Abra o arquivo onde a chamada à API é feita (ex: `App.tsx`).
+    * Substitua o endereço da API pelo IP local do seu servidor Flask (ex: `http://192.168.1.10:5000/recognize`).
 
-Registro automatizado de presença;
+4.  **Inicie o aplicativo com Expo:**
+    ```bash
+    npx expo start
+    ```
 
-Sistemas de autenticação facial em tempo real.
+5.  Abra o aplicativo **Expo Go** em seu smartphone e escaneie o QR Code exibido no terminal.
+
+---
+
+## 🔄 Fluxo de Funcionamento
+
+1.  O aplicativo React Native captura uma imagem da câmera do usuário.
+2.  A imagem é convertida para o formato **Base64**.
+3.  Uma requisição `POST` é enviada para o endpoint `/recognize` do servidor Flask, contendo a imagem em Base64.
+4.  O servidor Flask decodifica a imagem e a processa com o modelo **Haar Cascade** para detectar um rosto.
+5.  **Se um rosto for detectado**, o servidor retorna uma resposta de sucesso:
+    ```json
+    {
+      "recognized": true,
+      "user": "Rafael",
+      "timestamp": "2023-10-27T10:00:00.000Z"
+    }
+    ```
+6.  O aplicativo recebe a resposta, grava o log de presença no **Firebase Firestore** e redireciona o usuário para a tela principal (Tabs).
+7.  **Caso nenhum rosto seja detectado**, o servidor retorna:
+    ```json
+    {
+      "recognized": false,
+      "user": null,
+      "timestamp": "2023-10-27T10:00:05.123Z"
+    }
+    ```
+
+---
+
+## ⚙️ Endpoints da API
+
+O servidor Flask expõe os seguintes endpoints:
+
+* **`GET /`**
+    * **Descrição**: Verifica o status do servidor.
+    * **Resposta de Sucesso**:
+        ```json
+        {
+          "status": "Servidor de Reconhecimento Facial ativo 🚀"
+        }
+        ```
+
+* **`POST /recognize`**
+    * **Descrição**: Recebe uma imagem em Base64 para realizar o reconhecimento facial.
+    * **Corpo da Requisição (Body)**:
+        ```json
+        {
+          "image": "<sua-imagem-em-base64>"
+        }
+        ```
+    * **Respostas Possíveis**: JSON indicando se o reconhecimento foi bem-sucedido ou não (conforme detalhado no *Fluxo de Funcionamento*).
+
+---
+
+## 📝 Observações Finais
+
+* Certifique-se de que o servidor Flask esteja rodando e acessível na rede local antes de iniciar o aplicativo.
+* Este projeto foi desenvolvido para fins acadêmicos, mas pode ser expandido para cenários como:
+    * Controle de acesso físico ou digital.
+    * Sistemas de ponto eletrônico automatizado.
+    * Autenticação facial em tempo real para aplicações de segurança.
