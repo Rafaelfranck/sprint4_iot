@@ -68,3 +68,6 @@ iot_project/
 │
 ├── src/
 │ ├── api.py → Servidor Flask com endpoint /recognize
+
+Link Video de demonstração:
+https://drive.google.com/file/d/11PDbrhh8zY-XkbxwcXM17NDy-8RBYob2/view?usp=drive_link
